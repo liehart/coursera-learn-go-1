@@ -1,22 +1,24 @@
 package main
 
 import (
+	"bufio"
 	"encoding/json"
 	"fmt"
 	"os"
 )
 
 func main() {
-	var name, address string
 	personMap := make(map[string]string)
 
-	fmt.Printf("Please input your name: ")
-	fmt.Scanf("%s", &name)
-	fmt.Printf("Please input your address: ")
-	fmt.Scanf("%s", &address)
+	in := bufio.NewReader(os.Stdin)
 
-	personMap["name"] = name
-	personMap["address"] = address
+	fmt.Printf("Please input your name: ")
+	name, _ := in.ReadString('\n')
+	fmt.Printf("Please input your address: ")
+	address, _ := in.ReadString('\n')
+
+	personMap["name"] = name[:len(name)-1]
+	personMap["address"] = address[:len(address)-1]
 
 	dataByte, err := json.Marshal(personMap)
 	if err != nil {
